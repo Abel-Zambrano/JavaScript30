@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after { 
+    box-sizing: inherit; 
+  }
+
+  div {
+    width: 100%;
+    padding: 100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background: mistyrose;
+  }
+
+  .three {
+    background: coral;
+  }
+</style>
+
+<button id="btn" class="GO"></button>
+<script>
+    const divs = document.querySelectorAll('div');
+    const btn = document.getElementById('btn');
+    
+    function divLog(e) {
+        console.log(this.classList.value);
+        // e.stopPropagation(); // stops bubblying up and fires on one clicked   
+    }
+
+    divs.forEach(div => div.addEventListener('click', divLog, {
+        capture: false, // run on the capture down(true), run after down capture, then fires up(false)
+        once: true // unbind itself, listen for click then uunbind
+    }));
+
+    btn.addEventListener('click', () => {
+        console.log('Click!');
+        
+    }, {
+        once: true
+    });
+
+</script>
+</body>
+</html>
